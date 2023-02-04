@@ -16,6 +16,15 @@ M.test_get_git_relative_path = function()
 
 end
 
+M.test_get_buffer_git_relative_folder = function()
+  -- Get the path of the root git repository
+  local relative_path = require"slf.utils".get_buffer_git_relative_folder()
+  local result = relative_path == "lua/tests"
+  return result
+
+end
+
 vim.pretty_print(M.test_get_git_root_folder()) -- should print true
 vim.pretty_print(M.test_get_git_relative_path()) -- should print true
+vim.pretty_print(M.test_get_buffer_git_relative_folder()) -- should print true
 return M
