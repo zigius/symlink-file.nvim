@@ -2,21 +2,17 @@ local nvim = vim.api
 local M = {}
 
 M.defaults = {
-  base_folder = os.getenv("HOME") .. "/sync",
+  base_folder = os.getenv("HOME") .. "/sync/",
 }
 
 M.opts = {}
 
 M.symlink_file = function(opts)
-
-  -- Get the current buffer and its file path
-  local buffer = nvim.buf_get_current()
-  local file_path = nvim.buf_get_name(buffer)
+  local file_path = nvim.nvim_buf_get_name(0)
 
   -- Get the target folder location
-
-  local buffer_relative_folder = require "slf.utils".get_buffer_git_relative_folder()
-  local target_folder = ((opts and opts.base_folder) or M.opts.base_folder) .. buffer_relative_folder
+  local target_folder = ((opts and opts.base_folder) or M.opts.base_folder) ..
+      require "slf.utils".get_buffer_git_relative_folder()
 
   -- Create the target folder if it does not exist
   if not os.rename(target_folder, target_folder) then
@@ -34,8 +30,25 @@ M.symlink_file = function(opts)
 
 end
 
+M.get_symlink_command = function(opts)
+  local file_path = nvim.nvim_buf_get_name(0)
+  vim.pretty_print(file_path)
+
+  -- Get the target folder location
+  local target_folder = ((opts and opts.base_folder) or M.opts.base_folder) ..
+      require "slf.utils".get_buffer_git_relative_folder()
+
+  -- Construct the target file path
+  local target_file = target_folder .. "/" .. vim.fn.fnamemodify(file_path, ":t")
+
+  return "ln -sf " .. file_path .. " " .. target_file
+
+end
+
 M.setup = function(opts)
   M.opts = vim.tbl_deep_extend("force", {}, M.defaults, opts or {})
 end
+M.setup()
 
 return M
+
