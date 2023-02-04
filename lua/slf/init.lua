@@ -20,7 +20,7 @@ M.symlink_file = function(opts)
   end
 
   -- Construct the target file path
-  local target_file = target_folder .. "/" .. nvim.fn.fnamemodify(file_path, ":t")
+  local target_file = target_folder .. "/" .. vim.fn.fnamemodify(file_path, ":t")
 
   -- Create a symbolic link to the current file
   -- Commented out for now
