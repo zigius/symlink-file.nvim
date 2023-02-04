@@ -12,7 +12,6 @@ M.defaults = {
 M.opts = {}
 
 M.symlink_file = function(opts)
-  local file_path = nvim.nvim_buf_get_name(0)
 
   -- Get the target folder location
   local target_folder = ((opts and opts.base_folder) or M.opts.base_folder) ..
@@ -23,11 +22,8 @@ M.symlink_file = function(opts)
     os.execute("mkdir -p " .. target_folder)
   end
 
-  -- Construct the target file path
-  local target_file = target_folder .. "/" .. vim.fn.fnamemodify(file_path, ":t")
-
   -- Create a symbolic link to the current file
-  local command = "ln -sf " .. file_path .. " " .. target_file
+  local command = M.get_symlink_command(opts)
   os.execute(command)
   vim.pretty_print("synced files. command: " .. command)
 
