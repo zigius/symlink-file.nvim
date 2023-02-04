@@ -3,6 +3,10 @@ local M = {}
 
 M.defaults = {
   base_folder = os.getenv("HOME") .. "/sync/",
+  -- symbolic link or hard link. 
+  -- I use hardlink by default. To use symbolic links pass "-sf " or "-s ".
+  -- !!IMPORTANT!! - Add a space after the flags you want to pass
+  ln_flags = "",
 }
 
 M.opts = {}
@@ -39,7 +43,8 @@ M.get_symlink_command = function(opts)
   -- Construct the target file path
   local target_file = target_folder .. "/" .. vim.fn.fnamemodify(file_path, ":t")
 
-  local command = "ln -sf " .. file_path .. " " .. target_file
+  local ln_flags = ((opts and opts.ln_flags) or M.opts.ln_flags)
+  local command = "ln " .. ln_flags .. file_path .. " " .. target_file
   vim.pretty_print("sync command: " .. command)
   return command
 
