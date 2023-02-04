@@ -3,7 +3,7 @@ local M = {}
 M.test_get_git_root_folder = function()
   -- Get the path of the root git repository
   local git_root_folder = require"slf.utils".get_git_root_folder()
-  local result = git_root_folder == "open-in-obsidian.nvim"
+  local result = git_root_folder == "symlink-file.nvim"
   return result
 
 end
