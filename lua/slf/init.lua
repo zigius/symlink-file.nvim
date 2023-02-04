@@ -23,9 +23,7 @@ M.symlink_file = function(opts)
   local target_file = target_folder .. "/" .. vim.fn.fnamemodify(file_path, ":t")
 
   -- Create a symbolic link to the current file
-  -- Commented out for now
-  -- os.execute("ln -sf " .. file_path .. " " .. target_file)
-
+  os.execute("ln -sf " .. file_path .. " " .. target_file)
   vim.pretty_print("synced files. command: ln -sf " .. file_path .. " " .. target_file)
 
 end
