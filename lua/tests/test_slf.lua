@@ -11,7 +11,7 @@ M.test_get_symlink_command = function()
   local symlink_file_command = require "slf".get_symlink_command()
   vim.pretty_print(symlink_file_command)
 
-  local result = symlink_file_command == "ln -sf " .. os.getenv("HOME") .. "/.vim/plugged/symlink-file.nvim/lua/tests/test_slf.lua " .. os.getenv("HOME") .. "/workspace/lua/tests/test_slf.lua"
+  local result = symlink_file_command == "ln " .. os.getenv("HOME") .. "/.vim/plugged/symlink-file.nvim/lua/tests/test_slf.lua " .. os.getenv("HOME") .. "/workspace/lua/tests/test_slf.lua"
   return result
 end
 
